@@ -5,9 +5,7 @@ const config = require('../config');
 async function fetchTransactions(req, res) {
     const address = req.params.address;
     const apikey = config.ETH_API_KEY;
-    const url = `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=100&sort=asc&apikey=${apikey}`;
-    console.log("WOoooohoohohoh");
-    console.log(apikey);
+    const url = `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=100&sort=desc&apikey=${apikey}`;
     try {
         const response = await axios.get(url);
         if (response.data.message === 'OK') {
@@ -38,7 +36,7 @@ async function fetchTransactions(req, res) {
                 .sort({ 'transactions.timeStamp': -1 })
                 .limit(1);
             console.log(latestTransaction)
-            const latestTimestamp = latestTransaction ? latestTransaction.transactions[latestTransaction.transactions.length - 1].timeStamp : 0;
+            const latestTimestamp = latestTransaction ? latestTransaction.transactions[0].timeStamp : 0;
             console.log(latestTimestamp)
             // Filter out transactions that have already been inserted
             const newTransactions = transactions.filter((tx) => tx.timeStamp > latestTimestamp);

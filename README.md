@@ -1,6 +1,8 @@
 # Ethereum Transaction Tracker
 This is a Node.js application that tracks Ethereum transactions for a given address and stores them in a MongoDB database. The application uses the Etherscan API to retrieve transaction data and the Mongoose library to interact with the database.
 
+There is a script under runners directory, if you run that script it will fetch inr price of eth from an external API and store it in your db every 10 minutes. 
+
 # Requirements
 Before running this application, you'll need:
 
@@ -29,3 +31,8 @@ The thunderclient json is also included in the repo, you can import it and use t
 1. `/getTx/<address>` this api fetches the transactions from etherscan and dumps it into the mongodb.
 2. `/processTx/<address>` this api calculates the balance of ether from your transactions available in your db.
 3. `/getBalance/<address>` this api fetches the address balance from etherscan and inr value of eth from coingecko api.
+
+
+PS You will notice that I am only fetching the top 99 transactions, and dumping into the db, why? because fetching all past transactions will take a long time and then it would not be a synchronous process. It has to be done on the side, it will be like customer onboarding. You can tinker with etherscan api to fetch more transactions. 
+
+Customer onboarding => Fetching all customer data from another service/customer and putting it into our systems.
